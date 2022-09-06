@@ -125,7 +125,15 @@ def AddEmp():
 
         except Exception as e:
             return str(e)
-
+    except Exception as err:        
+        return render_template('AddEmp.html', err=err.args, cache={
+            "emp_id":emp_id,
+            "first_name":first_name,
+            "last_name":last_name,
+            "pri_skill":pri_skill,
+            "location":location,
+            "emp_image_file":emp_image_file
+        })
     finally:
         cursor.close()
 
