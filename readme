@@ -2,7 +2,7 @@
 # Either add "sudo" before all commands or use "sudo su" first
 
 #!/bin/bash
-sudo su
+cd /home/ec2-user/
 yum update -y
 yum install git -y
 git clone https://github.com/kchongee/aws_live.git
