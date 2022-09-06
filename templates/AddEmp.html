@@ -2,38 +2,66 @@
 <html>
 <head>
 	<title>Add Employee Information</title>
+	<style>
+		.err-text{
+			color:red;
+		}
+	</style>
+	<script type="text/javascript">
+		function readURL(input) {				
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();	
+
+				reader.onload = function (e) {					
+					document.getElementById("image_holder").style.display = "inherit";
+					document.getElementById("image_holder").src = e.target.result;
+				};
+	
+				reader.readAsDataURL(input.files[0]);
+			}			
+		}		
+	</script>
 </head>
-<center>
-	<font color="black" size="4" style="font-family: avenir">
+<body style="font-family:avenir; font-size: 4; color:black; text-align: center; background-color: lightgrey;">
 
-		<h1 style="color: DodgerBlue">Employee Database</h1>
+	<h1 style="color: DodgerBlue">Employee Database</h1>
+	<!-- <form action="/getemp" autocomplete="on" method="GET" enctype="multipart/form-data"> -->
+	<a href="/getemp">
+		<button style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br>
+	</a>
+	<!-- </form> -->
+	
+	{% if err %}
+		{% if err[0] == 1062 %}
+			<h3 class="err-text">The id has been taken, please use another instead.</h3>
+		{% else %}	
+			<h3 class="err-text">{{err}}</h3>
+		{% endif %}
+	{% endif %}						
 
-		<body bgcolor="lightgrey">
-			
-			<a href="/getemp">
-				<button style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br>
-			</a>
+	<form action="/addemp" autocomplete="on" method = "POST" enctype="multipart/form-data">				
 
-			<form action="/addemp" autocomplete="on" method = "POST" enctype="multipart/form-data">				
+		Employee ID:<br> <input required style="height:25px;font-size:14pt; color:grey;" type="number" name="emp_id" autofocus size="40" value="{{cache['emp_id'] if cache else ''}}"><br><br>
 
-		  		Employee ID:<br> <input style="height:25px;font-size:14pt; color:grey;" type="number" name="emp_id" autofocus size="40"><br><br>
+		First Name:<br> <input required style="height:25px;font-size:14pt;color:grey;" type="text" name="first_name" value="{{cache['first_name'] if cache else ''}}"><br><br>
 
-		  		First Name:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text" name="first_name" ><br><br>
+		Last Name:<br> <input required style="height:25px;font-size:14pt;color:grey;" type="text" name="last_name" value="{{cache['last_name'] if cache else ''}}"><br><br>
 
-		  		Last Name:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text" name="last_name"><br><br>
+		Primary Skills:<br> <input required style="height:25px;font-size:14pt;color:grey;" type="text" name="pri_skill" value="{{cache['pri_skill'] if cache else ''}}"><br><br>
 
-		  		Primary Skills:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text" name="pri_skill"><br><br>
+		Location:<br> <input required style="height:25px;font-size:14pt;color:grey;" type="text" name="location" value="{{cache['location'] if cache else ''}}"><br><br>
 
-		  		Location:<br> <input style="height:25px;font-size:14pt;color:grey;" type="text" name="location"><br><br>
+		<div style="display:flex; justify-content: center; align-items: center;">
+			<div >						
+				Image: &nbsp;&nbsp;
+				<input required id="image_input" onchange="readURL(this);" type=file name="emp_image_file" style="width:250px;font-size:14pt;color:grey;" accept="image/png, image/gif, image/jpeg"> 							
+			</div>			
+			<img id="image_holder" alt="your image" style="box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2),0 0px 10px 0 rgba(0,0,0,0.19); max-width: 180px; max-height: 180px; object-fit: cover; display:none; margin:0 10px;"/> 
+		</div>
 
-		  		Image: <input type=file name="emp_image_file" style="height:25px;font-size:14pt;color:grey;"> <br><br>
+		<button type="submit" style="background: grey; height: 45px; width: 200px; color: white; size: 5; font:oblique; margin:10px;">UPDATE DATABASE</button>
 
-		  		<button type="submit" style="background: grey; height: 45px; width: 200px; color: white; size: 5; font:oblique;">UPDATE DATABASE</button>
-
-			</form>
+	</form>
 <a href="/about">About Us</a>
-		</body>
-
-	</font>
-</center>
+</body>	
 </html>
