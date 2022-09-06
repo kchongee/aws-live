@@ -2,9 +2,9 @@
 # Either add "sudo" before all commands or use "sudo su" first
 
 #!/bin/bash
-cd /home/ec2-user/
 yum update -y
 yum install git -y
+cd /home/ec2-user/
 git clone https://github.com/kchongee/aws_live.git
 cd aws_live
 pip3 install flask
