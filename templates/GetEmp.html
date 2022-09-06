@@ -9,6 +9,10 @@
 		<h1 style="color: DodgerBlue">Employee Information</h1>
 
 		<body bgcolor="lightgrey">
+			
+			{% if err %}				
+				<h3 style="color:red">No record for employee id={{id if id else ""}}</h3>				
+			{% endif %}	
 
 			<form action="/fetchdata" autocomplete="on" method="POST">
 
@@ -19,7 +23,7 @@
 
 		  		<button type="submit" style="background: grey; height: 45px; width: 200px; color: white; size: 5; font:oblique;">FETCH INFO</button><br><br>
 
-		  		<button type="submit" formaction="http://3.134.115.108:80/" style="background: white	; height: 45px; width: 200px; color: black; size: 5; font:oblique;" method="GET">GO TO UPDATE DATABASE PAGE</button>
+<!-- 		  		<button type="submit" formaction="http://3.134.115.108:80/" style="background:white; height:45px; width:200px; color:black; size:5; font:oblique;" method="GET">GO TO UPDATE DATABASE PAGE</button> -->
 
 			</form>
 
