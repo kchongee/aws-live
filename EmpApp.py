@@ -34,31 +34,23 @@ def about():
 def GetEmp():
     return render_template('GetEmp.html')
 
-@application.route("/fetchdata", methods=['POST'])
+@app.route("/fetchdata", methods=['POST'])
 def GetEmpOne():
     employee_id = request.form['emp_id']
     read_sql = "SELECT * FROM `employee` WHERE emp_id=%s"
-    # read_sql = "SELECT count(*) FROM `employee`"
     cursor = db_conn.cursor()
 
     try:
 
-        cursor.execute(read_sql, (employee_id))
-        # cursor.execute(read_sql)        
+        cursor.execute(read_sql, (employee_id))        
         result = cursor.fetchone()
 
-        emp_id,first_name,last_name,pri_skill,location = result
+        emp_id,first_name,last_name,pri_skill,location = result        
 
-        print(result)
-
-        # Load image file from S3 #
-        '''
-        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
-        s3 = boto3.resource('s3')
+        # Load image file from S3 #        
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"        
         
-        try:
-            print("Data inserted in MySQL RDS... uploading image to S3...")
-            s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
+        try:                       
             bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
             s3_location = (bucket_location['LocationConstraint'])
 
@@ -74,14 +66,14 @@ def GetEmpOne():
 
         except Exception as e:
             return str(e)
-        '''
+        
     except Exception as e:        
-        return render_template('GetEmpError.html',id=employee_id)        
+        return render_template('GetEmp.html',err=e,id=employee_id)        
     finally:
         cursor.close()
 
     print("all modification done...")    
-    return render_template('GetEmpOutput.html',id=emp_id,fname=first_name,lname=last_name,priskill=pri_skill,location=location)
+    return render_template('GetEmpOutput.html',id=emp_id,fname=first_name,lname=last_name,priskill=pri_skill,location=location,img_url=object_url)
 
 @application.route("/addemp", methods=['POST'])
 def AddEmp():
