@@ -73,7 +73,7 @@ def GetEmpOne():
         cursor.close()
 
     print("all modification done...")    
-    return render_template('GetEmpOutput.html',id=emp_id,fname=first_name,lname=last_name,priskill=pri_skill,location=location,img_url=object_url)
+    return render_template('GetEmpOutput.html',id=emp_id,fname=first_name,lname=last_name,priskill=pri_skill,location=location,image_url=object_url)
 
 @application.route("/addemp", methods=['POST'])
 def AddEmp():
