@@ -2,15 +2,34 @@
 # Either add "sudo" before all commands or use "sudo su" first
 
 #!/bin/bash
-sudo su
 yum update -y
 yum install git -y
+cd /home/ec2-user/
 git clone https://github.com/kchongee/aws_live.git
 cd aws_live
 pip3 install flask
 pip3 install pymysql
 pip3 install boto3
-python3 EmpApp.py
+pip3 install gunicorn
+
+sudo yum install -y amazon-efs-utils
+sudo mkdir /mnt/efs
+sudo mount -t efs -o tls fs-0f7b2cb4d9697bc71:/ /mnt/efs
+
+cp /mnt/efs/flaskapp.service /etc/systemd/system/flaskapp.service
+
+systemctl start flaskapp
+systemctl status flaskapp
+systemctl enable flaskapp
+
+amazon-linux-extras install nginx1 -y
+systemctl start nginx
+systemctl enable nginx
+
+cp /mnt/efs/app.conf /etc/nginx/conf.d/app.conf
+
+systemctl reload nginx
+sudo tail -F /var/log/nginx/error.log
 
 
 
