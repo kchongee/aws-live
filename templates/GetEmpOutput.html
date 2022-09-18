@@ -20,17 +20,25 @@
 
 			  		Last Name:<br> {{ lname }} <br><br>
 
-			  		Primary Interest:<br> {{ interest }} <br><br>
+			  		Primary Skill:<br> {{ priskill }} <br><br>
 
 			  		Location:<br> {{ location }} <br><br>
 
-			  		Image URL: <br> {{ image_url }} <br><br>
+			  		Image URL: <br> {{ image_url }} <br>
+
+					<img src="{{image_url}}" alt="emp_img" style="box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2),0 0px 10px 0 rgba(0,0,0,0.19); max-width: 200px; max-height: 200px; object-fit: cover;"/>
+
+					<br><br>
 
 			  		<button type="submit" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;" formaction="http://3.134.115.108:80/getemp">RESET</button><br><br>
 
 			  	</div>
 
 			</form>
+
+			<a href="/getemp">
+				<button style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">BACK</button><br><br>
+			</a>
 
 		</body>
 
